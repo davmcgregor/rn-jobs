@@ -1,16 +1,15 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { createAppContainer } from 'react-navigation';
-import { createBottomTabNavigator } from 'react-navigation-tabs';
 import { createStackNavigator } from 'react-navigation-stack';
+import { createBottomTabNavigator } from 'react-navigation-tabs';
 
-import AuthScreen from './screens/AuthScreen'
-import WelcomeScreen from './screens/WelcomeScreen'
-import MapScreen from './screens/MapScreen'
-import DeckScreen from './screens/DeckScreen'
-import SettingsScreen from './screens/SettingsScreen'
-import ReviewScreen from './screens/ReviewScreen'
+import AuthScreen from './src/screens/AuthScreen'
+import WelcomeScreen from './src/screens/WelcomeScreen'
+import MapScreen from './src/screens/MapScreen'
+import DeckScreen from './src/screens/DeckScreen'
+import SettingsScreen from './src/screens/SettingsScreen'
+import ReviewScreen from './src/screens/ReviewScreen'
 
 const MainNavigator = createBottomTabNavigator({
   welcome: WelcomeScreen, 
@@ -28,7 +27,6 @@ const MainNavigator = createBottomTabNavigator({
 const App = createAppContainer(MainNavigator);
 
 export default () => {
-
   return (
     <App />
   );

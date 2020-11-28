@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text } from 'react-native'
+import { View, Text, Button } from 'react-native'
 
 const ReviewScreen = () => {
   return (
@@ -25,5 +25,13 @@ const ReviewScreen = () => {
     </View>
   )
 }
+
+ReviewScreen.navigationOptions = ({ navigation }) => {
+  return {
+    headerRight: () => (
+      <Button title="Settings" onPress={() => navigation.navigate('settings')} />
+    ),
+  };
+};
 
 export default ReviewScreen

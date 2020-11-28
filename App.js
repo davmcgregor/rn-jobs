@@ -28,7 +28,7 @@ const App = createAppContainer(MainNavigator);
 
 export default () => {
   return (
-    <App />
+    <App /> 
   );
 }
 

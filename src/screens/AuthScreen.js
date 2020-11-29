@@ -4,12 +4,23 @@ import { View, Text } from 'react-native';
 import { connect } from 'react-redux';
 import { facebookLogin } from '../actions/auth_actions';
 
-const AuthScreen = ({ facebookLogin }) => {
+const AuthScreen = ({ navigation, token, facebookLogin }) => {
+  const onAuthComplete = () => {
+    if (token) {
+      navigation.navigate('main', { screen: 'map' });
+    }
+  };
+
   useEffect(() => {
     facebookLogin();
-  }, []);
+    onAuthComplete();
+  }, [token]);
 
   return null;
 };
 
-export default connect(null, { facebookLogin })(AuthScreen);
+const mapStateToProps = (state) => ({
+  token: state.auth.token,
+});
+
+export default connect(mapStateToProps, { facebookLogin })(AuthScreen);

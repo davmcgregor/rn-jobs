@@ -1,6 +1,7 @@
-import React from 'react';
-import { View, Text } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { AppLoading } from 'expo';
 import Slides from '../components/Slides';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const SLIDE_DATA = [
   { text: 'Welcome to JobApp', color: '#03A9F4' },
@@ -9,9 +10,28 @@ const SLIDE_DATA = [
 ];
 
 const WelcomeScreen = ({ navigation }) => {
+  const [token, setToken] = useState(null);
+
+  useEffect(() => {
+    async function fetchToken() {
+      let getToken = await AsyncStorage.getItem('fb_token');
+      if (getToken) {
+        navigation.navigate('main', { screen: 'map' });
+        setToken(getToken);
+      } else {
+        setToken(false);
+      }
+    }
+    fetchToken();
+  });
+
   const onSlidesComplete = () => {
     navigation.navigate('auth');
   };
+
+  if (token === null) {
+    return <AppLoading />;
+  }
 
   return <Slides data={SLIDE_DATA} onComplete={onSlidesComplete} />;
 };

@@ -1,9 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, ActivityIndicator } from 'react-native';
+import { View, StyleSheet, ActivityIndicator } from 'react-native';
+import { Button } from 'react-native-elements';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import MapView from 'react-native-maps';
+import { fetchFood } from '../actions/food_actions';
+import { connect } from 'react-redux';
 
-const MapScreen = () => {
+const MapScreen = ({ fetchFood }) => {
   const [mapLoaded, setMapLoaded] = useState(false);
+
   const [region, setRegion] = useState({
     longitude: -122,
     latitude: 37,
@@ -28,10 +33,27 @@ const MapScreen = () => {
       <MapView
         style={{ flex: 1 }}
         region={region}
-        onRegionChangeComplete={(region) => setRegion(region)}
+        onRegionChangeComplete={(region) => {
+          setRegion(region);
+        }}
       />
+      <View style={styles.buttonContainer}>
+        <Button
+          icon={<Icon name='search' size={15} color='white' />}
+          title=' Search This Area'
+          onPress={() => fetchFood(region)}
+        />
+      </View>
     </View>
   );
 };
 
-export default MapScreen;
+const styles = StyleSheet.create({
+  buttonContainer: {
+    position: 'absolute',
+    alignSelf: 'center',
+    bottom: 20,
+  },
+});
+
+export default connect(null, { fetchFood })(MapScreen);

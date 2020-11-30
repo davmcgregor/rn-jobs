@@ -1,29 +1,35 @@
-import React from 'react'
-import { View, Text } from 'react-native'
+import React, { useState, useEffect } from 'react';
+import { View, Text, ActivityIndicator } from 'react-native';
+import MapView from 'react-native-maps';
 
 const MapScreen = () => {
-  return (
-    <View>
-      <Text>
-        MapScreen
-      </Text>
-      <Text>
-        MapScreen
-      </Text>
-      <Text>
-        MapScreen
-      </Text>
-      <Text>
-        MapScreen
-      </Text>
-      <Text>
-        MapScreen
-      </Text>
-      <Text>
-        MapScreen
-      </Text>
-    </View>
-  )
-}
+  const [mapLoaded, setMapLoaded] = useState(false);
 
-export default MapScreen
+  useEffect(() => {
+    setMapLoaded(true);
+  }, []);
+
+  if (!mapLoaded) {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center' }}>
+        <ActivityIndicator size='small' color='#0000ff' />
+      </View>
+    );
+  }
+
+  return (
+    <View style={{ flex: 1 }}>
+      <MapView
+        style={{ flex: 1 }}
+        initialRegion={{
+          longitude: -122,
+          latitude: 37,
+          latitudeDelta: 0.04,
+          longitudeDelta: 0.09,
+        }}
+      />
+    </View>
+  );
+};
+
+export default MapScreen;

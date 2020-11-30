@@ -4,6 +4,12 @@ import MapView from 'react-native-maps';
 
 const MapScreen = () => {
   const [mapLoaded, setMapLoaded] = useState(false);
+  const [region, setRegion] = useState({
+    longitude: -122,
+    latitude: 37,
+    latitudeDelta: 0.04,
+    longitudeDelta: 0.09,
+  });
 
   useEffect(() => {
     setMapLoaded(true);
@@ -21,12 +27,8 @@ const MapScreen = () => {
     <View style={{ flex: 1 }}>
       <MapView
         style={{ flex: 1 }}
-        initialRegion={{
-          longitude: -122,
-          latitude: 37,
-          latitudeDelta: 0.04,
-          longitudeDelta: 0.09,
-        }}
+        region={region}
+        onRegionChangeComplete={(region) => setRegion(region)}
       />
     </View>
   );

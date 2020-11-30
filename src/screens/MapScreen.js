@@ -6,7 +6,7 @@ import MapView from 'react-native-maps';
 import { fetchFood } from '../actions/food_actions';
 import { connect } from 'react-redux';
 
-const MapScreen = ({ fetchFood }) => {
+const MapScreen = ({ navigation, fetchFood }) => {
   const [mapLoaded, setMapLoaded] = useState(false);
 
   const [region, setRegion] = useState({
@@ -15,6 +15,12 @@ const MapScreen = ({ fetchFood }) => {
     latitudeDelta: 0.04,
     longitudeDelta: 0.09,
   });
+
+  const onButtonPress = () => {
+    fetchFood(region, () => {
+      navigation.navigate('deck');
+    });
+  };
 
   useEffect(() => {
     setMapLoaded(true);
@@ -41,7 +47,7 @@ const MapScreen = ({ fetchFood }) => {
         <Button
           icon={<Icon name='search' size={15} color='white' />}
           title=' Search This Area'
-          onPress={() => fetchFood(region)}
+          onPress={onButtonPress}
         />
       </View>
     </View>

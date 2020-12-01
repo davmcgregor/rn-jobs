@@ -33,19 +33,24 @@ const DeckScreen = ({ food }) => {
           ></MapView>
         </View>
         <Card.Divider />
+        <View style={styles.detailWrapper}>
+          <Text>Price: {foodItem.price}</Text>
+          <Text>{foodItem.is_closed ? 'Closed' : 'Open'}</Text>
+        </View>
         <FlatList
+          contentContainerStyle={{ flexGrow: 1, justifyContent: 'center' }}
           data={foodItem.categories}
+          horizontal={true}
           keyExtractor={(foodItem) => foodItem.id}
-          renderItem={({ item }) => {
-            return <Text>{item.title}</Text>;
+          renderItem={({ item, index }) => {
+            return (
+              <Text>
+                {item.title}
+                {index === foodItem.categories.length - 1 ? '' : ', '}
+              </Text>
+            );
           }}
         />
-        <View style={{ height: 200 }}>
-          <Image
-            style={styles.cardImage}
-            source={{ uri: foodItem.image_url }}
-          />
-        </View>
       </Card>
     );
   };
@@ -72,12 +77,10 @@ const DeckScreen = ({ food }) => {
 };
 
 const styles = StyleSheet.create({
-  cardImage: {
-    flex: 1,
-    padding: 5,
-  },
-  listText: {
-    height: 100,
+  detailWrapper: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    marginBottom: 10,
   },
 });
 

@@ -10,8 +10,12 @@ const MapScreen = ({ navigation, fetchFood }) => {
   const [mapLoaded, setMapLoaded] = useState(false);
 
   const [region, setRegion] = useState({
-    longitude: -122,
-    latitude: 37,
+    // san jose
+    // longitude: -121.867905,
+    // latitude: 37.279518,
+    // london
+    longitude: -0.101314,
+    latitude: 51.529158,
     latitudeDelta: 0.04,
     longitudeDelta: 0.09,
   });

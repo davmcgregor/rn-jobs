@@ -10,20 +10,19 @@ import {
 import { connect } from 'react-redux';
 import MapView from 'react-native-maps';
 import { Card } from 'react-native-elements';
-
+import { likeFood } from '../actions/food_actions';
 import Swipe from '../components/Swipe';
 
-const DeckScreen = ({ food }) => {
-  console.log(food[0][0]);
+const DeckScreen = ({ food, likeFood }) => {
   const renderCard = (foodItem) => {
     return (
       <Card key={foodItem.id}>
-        <Card.Title h3>{foodItem.name}</Card.Title>
+        <Card.Title h4>{foodItem.name}</Card.Title>
         <View style={{ height: 300 }}>
           <MapView
             scrollEnabled={false}
             style={{ flex: 1 }}
-            cacheEnabled={Platform.OS === 'android' ? true : false}
+            cacheEnabled={true}
             initialRegion={{
               latitude: foodItem.coordinates.latitude,
               longitude: foodItem.coordinates.longitude,
@@ -41,7 +40,8 @@ const DeckScreen = ({ food }) => {
           contentContainerStyle={{ flexGrow: 1, justifyContent: 'center' }}
           data={foodItem.categories}
           horizontal={true}
-          keyExtractor={(foodItem) => foodItem.id}
+          scrollEnabled={false}
+          keyExtractor={(item) => item.title}
           renderItem={({ item, index }) => {
             return (
               <Text>
@@ -65,12 +65,19 @@ const DeckScreen = ({ food }) => {
     );
   };
 
+  const onSwipeLeft = (item) => {
+    return console.log('left', item);
+  };
+
   return (
     <View>
       <Swipe
         data={food[0]}
         renderCard={renderCard}
         renderNoMoreCards={renderNoMoreCards}
+        onSwipeLeft={onSwipeLeft}
+        onSwipeRight={(food) => likeFood(food)}
+        keyProp='id'
       />
     </View>
   );
@@ -88,4 +95,4 @@ const mapStateToProps = (state) => ({
   food: state.food.businesses,
 });
 
-export default connect(mapStateToProps)(DeckScreen);
+export default connect(mapStateToProps, { likeFood })(DeckScreen);

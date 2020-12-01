@@ -7,6 +7,7 @@ import {
   Dimensions,
   LayoutAnimation,
   UIManager,
+  Platform,
 } from 'react-native';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
@@ -17,6 +18,7 @@ const Swipe = ({
   data,
   renderCard,
   renderNoMoreCards,
+  keyProp,
   onSwipeRight,
   onSwipeLeft,
 }) => {
@@ -99,34 +101,34 @@ const Swipe = ({
       return renderNoMoreCards();
     }
 
-    return data
-      .map((item, i) => {
-        if (i < index) return null;
+    const deck = data.map((item, i) => {
+      if (i < index) return null;
 
-        if (i === index) {
-          return (
-            <Animated.View
-              key={item.id}
-              style={[getCardStyle(), styles.cardStyle]}
-              {...panResponder.panHandlers}
-            >
-              {renderCard(item)}
-            </Animated.View>
-          );
-        }
+      if (i === index) {
         return (
           <Animated.View
-            key={item.id}
-            style={[styles.cardStyle, { top: 10 * (i - index) }]}
+            key={item[keyProp] || item.id}
+            style={[getCardStyle(), styles.cardStyle]}
+            {...panResponder.panHandlers}
           >
             {renderCard(item)}
           </Animated.View>
         );
-      })
-      .reverse();
+      }
+      return (
+        <Animated.View
+          key={item.id}
+          style={[styles.cardStyle, { top: 10 * (i - index), zIndex: -i }]}
+        >
+          {renderCard(item)}
+        </Animated.View>
+      );
+    });
+
+    return Platform.OS === 'android' ? deck : deck.reverse();
   };
 
-  return <View>{renderCards()}</View>;
+  return <View style={{ marginTop: 45 }}>{renderCards()}</View>;
 };
 
 const styles = StyleSheet.create({

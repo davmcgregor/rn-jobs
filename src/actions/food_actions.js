@@ -1,5 +1,5 @@
 import yelp from '../api/yelp';
-import { FETCH_JOBS } from './types';
+import { FETCH_FOOD } from './types';
 
 export const fetchFood = ({ latitude, longitude }, callback) => async (
   dispatch
@@ -14,7 +14,7 @@ export const fetchFood = ({ latitude, longitude }, callback) => async (
         term: 'restaurant',
       },
     });
-    dispatch({ type: FETCH_JOBS, payload: response.data });
+    dispatch({ type: FETCH_FOOD, payload: response.data.businesses });
     callback();
   } catch (err) {
     console.error(err);

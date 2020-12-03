@@ -1,19 +1,12 @@
 import React from 'react';
-import {
-  View,
-  Text,
-  Image,
-  FlatList,
-  StyleSheet,
-  Platform,
-} from 'react-native';
+import { View, Text, FlatList, StyleSheet, Platform } from 'react-native';
 import { connect } from 'react-redux';
 import MapView from 'react-native-maps';
-import { Card } from 'react-native-elements';
+import { Card, Button } from 'react-native-elements';
 import { likeFood } from '../actions/food_actions';
 import Swipe from '../components/Swipe';
 
-const DeckScreen = ({ food, likeFood }) => {
+const DeckScreen = ({ food, likeFood, navigation }) => {
   const renderCard = (foodItem) => {
     return (
       <Card key={foodItem.id}>
@@ -58,9 +51,16 @@ const DeckScreen = ({ food, likeFood }) => {
   const renderNoMoreCards = () => {
     return (
       <Card>
-        <Card.Title h3>No results!</Card.Title>
+        <Card.Title h3>No Results!</Card.Title>
         <Card.Divider />
         <Text style={{ marginVertical: 10 }}>There is no food here!</Text>
+        <Button
+          title='Back to Map'
+          large
+          icon={{ name: 'my-location', color: '#ffffff' }}
+          backgroundColor='#03A9F4'
+          onPress={() => navigation.navigate('map')}
+        />
       </Card>
     );
   };

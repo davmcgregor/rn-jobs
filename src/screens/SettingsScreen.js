@@ -10,7 +10,7 @@ const SettingsScreen = ({ clearLikedFood }) => {
       <Button
         title='Reset Liked Jobs'
         large
-        icon={{ name: 'delete-forever' }}
+        icon={{ name: 'delete-forever', color: '#ffffff' }}
         backgroundColor='#F44336'
         onPress={clearLikedFood}
       />

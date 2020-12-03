@@ -1,5 +1,5 @@
 import yelp from '../api/yelp';
-import { FETCH_FOOD, LIKE_FOOD } from './types';
+import { FETCH_FOOD, LIKE_FOOD, CLEAR_LIKED_FOOD } from './types';
 
 export const fetchFood = ({ latitude, longitude }, callback) => async (
   dispatch
@@ -10,7 +10,7 @@ export const fetchFood = ({ latitude, longitude }, callback) => async (
         latitude,
         longitude,
         radius: 16000,
-        limit: 50,
+        limit: 10,
         term: 'restaurant',
       },
     });
@@ -25,5 +25,11 @@ export const likeFood = (food) => {
   return {
     payload: food,
     type: LIKE_FOOD,
+  };
+};
+
+export const clearLikedFood = () => {
+  return {
+    type: CLEAR_LIKED_FOOD,
   };
 };

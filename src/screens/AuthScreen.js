@@ -5,7 +5,7 @@ import { facebookLogin } from '../actions/auth_actions';
 const AuthScreen = ({ navigation, token, facebookLogin }) => {
   const onAuthComplete = () => {
     if (token) {
-      navigation.navigate('main', { screen: 'map' });
+      navigation.navigate('main', { screen: 'Map' });
     }
   };
 

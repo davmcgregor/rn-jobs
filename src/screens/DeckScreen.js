@@ -59,7 +59,7 @@ const DeckScreen = ({ food, likeFood, navigation }) => {
           large
           icon={{ name: 'my-location', color: '#ffffff' }}
           backgroundColor='#03A9F4'
-          onPress={() => navigation.navigate('map')}
+          onPress={() => navigation.navigate('Map')}
         />
       </Card>
     );

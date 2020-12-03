@@ -57,7 +57,7 @@ const ReviewScreen = ({ likedFood }) => {
 };
 
 ReviewScreen.navigationOptions = {
-  title: 'Review Jobs',
+  title: 'Review Food',
   tabBar: {
     icon: ({ tintColor }) => {
       return <Icon name='favorite' size={30} color={tintColor} />;

@@ -16,7 +16,7 @@ const WelcomeScreen = ({ navigation }) => {
     async function fetchToken() {
       let getToken = await AsyncStorage.getItem('fb_token');
       if (getToken) {
-        navigation.navigate('main', { screen: 'map' });
+        navigation.navigate('main', { screen: 'Map' });
         setToken(getToken);
       } else {
         setToken(false);

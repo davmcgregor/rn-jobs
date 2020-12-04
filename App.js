@@ -50,22 +50,26 @@ const AppMain = () => {
           let iconName;
           if (route.name === 'Map') {
             iconName = focused ? 'map' : 'map-o';
-          } else if (route.name === 'Deck') {
+          } else if (route.name === 'Food') {
             iconName = 'search';
           } else if (route.name === 'Review') {
-            iconName = 'th-list';
+            iconName = 'heart';
           }
           // You can return any component that you like here!
-          return <FontAwesome name={iconName} size={size} color={color} />;
+          return <FontAwesome name={iconName} size={30} color={color} />;
         },
       })}
       tabBarOptions={{
         activeTintColor: 'tomato',
         inactiveTintColor: 'gray',
+        style: { height: '12%' },
+        labelStyle: {
+          fontSize: 16,
+        },
       }}
     >
       <Main.Screen name='Map' component={MapScreen} />
-      <Main.Screen name='Deck' component={DeckScreen} />
+      <Main.Screen name='Food' component={DeckScreen} />
       <Main.Screen name='Review' component={AppReview} />
     </Main.Navigator>
   );

@@ -22,7 +22,7 @@ const MapScreen = ({ navigation, fetchFood }) => {
 
   const onButtonPress = () => {
     fetchFood(region, () => {
-      navigation.navigate('Deck');
+      navigation.navigate('Food');
     });
   };
 

@@ -6,7 +6,8 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Button, Icon } from 'react-native-elements';
 
 import { Provider } from 'react-redux';
-import store from './src/store';
+import {store, persistor} from './src/store';
+import { PersistGate } from 'redux-persist/integration/react'
 
 import AuthScreen from './src/screens/AuthScreen';
 import WelcomeScreen from './src/screens/WelcomeScreen';
@@ -79,13 +80,15 @@ const Tab = createBottomTabNavigator();
 export default function App() {
   return (
     <Provider store={store}>
-      <NavigationContainer>
-        <Tab.Navigator screenOptions={{ tabBarVisible: false }}>
-          <Tab.Screen name='welcome' component={WelcomeScreen} />
-          <Tab.Screen name='auth' component={AuthScreen} />
-          <Tab.Screen name='main' component={AppMain} />
-        </Tab.Navigator>
-      </NavigationContainer>
+      <PersistGate loading={null} persistor={persistor}>
+        <NavigationContainer>
+          <Tab.Navigator screenOptions={{ tabBarVisible: false }}>
+            <Tab.Screen name='welcome' component={WelcomeScreen} />
+            <Tab.Screen name='auth' component={AuthScreen} />
+            <Tab.Screen name='main' component={AppMain} />
+          </Tab.Navigator>
+        </NavigationContainer>
+      </PersistGate>
     </Provider>
   );
 }

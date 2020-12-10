@@ -1,13 +1,15 @@
-import React from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { StyleSheet, Text, View, Platform } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Button, Icon } from 'react-native-elements';
 
+import registerForPushNotifications from './src/services/registerForPushNotifications';
+
 import { Provider } from 'react-redux';
-import {store, persistor} from './src/store';
-import { PersistGate } from 'redux-persist/integration/react'
+import { store, persistor } from './src/store';
+import { PersistGate } from 'redux-persist/integration/react';
 
 import AuthScreen from './src/screens/AuthScreen';
 import WelcomeScreen from './src/screens/WelcomeScreen';
@@ -77,7 +79,12 @@ const AppMain = () => {
 };
 
 const Tab = createBottomTabNavigator();
+
 export default function App() {
+  useEffect(() => {
+    registerForPushNotifications();
+  }, []);
+
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>

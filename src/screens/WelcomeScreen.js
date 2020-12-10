@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { AppLoading } from 'expo';
+import AppLoading from 'expo-app-loading';
 import Slides from '../components/Slides';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 

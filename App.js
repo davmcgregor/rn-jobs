@@ -5,6 +5,8 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Button, Icon } from 'react-native-elements';
 
+import * as Notifications from 'expo-notifications';
+import * as Permissions from 'expo-permissions';
 import registerForPushNotifications from './src/services/registerForPushNotifications';
 
 import { Provider } from 'react-redux';
@@ -81,13 +83,44 @@ const AppMain = () => {
 const Tab = createBottomTabNavigator();
 
 export default function App() {
+  const [expoPushToken, setExpoPushToken] = useState('');
+  const [notification, setNotification] = useState(false);
+  const notificationListener = useRef();
+  const responseListener = useRef();
+
   useEffect(() => {
-    registerForPushNotifications();
+    registerForPushNotifications().then((token) => setExpoPushToken(token));
+
+    notificationListener.current = Notifications.addNotificationReceivedListener(
+      (notification) => {
+        setNotification(notification);
+      }
+    );
+
+    responseListener.current = Notifications.addNotificationResponseReceivedListener(
+      (response) => {
+        console.log(response);
+      }
+    );
+
+    return () => {
+      Notifications.removeNotificationSubscription(notificationListener);
+      Notifications.removeNotificationSubscription(responseListener);
+    };
   }, []);
 
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
+        {/* <View style={{ marginTop: 300 }}>
+          <Button
+            title='Press to schedule a notification'
+            onPress={async () => {
+              await schedulePushNotification();
+              console.log('press')
+            }}
+          />
+        </View> */}
         <NavigationContainer>
           <Tab.Navigator screenOptions={{ tabBarVisible: false }}>
             <Tab.Screen name='welcome' component={WelcomeScreen} />
@@ -98,4 +131,15 @@ export default function App() {
       </PersistGate>
     </Provider>
   );
+}
+
+async function schedulePushNotification() {
+  await Notifications.scheduleNotificationAsync({
+    content: {
+      title: "You've got mail! 📬",
+      body: 'Here is the notification body',
+      data: { data: 'goes here' },
+    },
+    trigger: { seconds: 2 },
+  });
 }
